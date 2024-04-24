@@ -1,0 +1,63 @@
+version: '3.8'
+services:
+    app:
+        build:
+            context: .
+            dockerfile: ./.docker/app/Dockerfile
+            args:
+                project_name: ${APP_NAME}
+        image: ${APP_NAME}_app
+        container_name: ${APP_NAME}_app
+        restart: unless-stopped
+        tty: true
+        user: www-data
+        working_dir: /var/www/${APP_NAME}
+        environment:
+            PHP_INI_SCAN_DIR: "/usr/local/etc/php/custom.d:/usr/local/etc/php/conf.d"
+        volumes:
+            - .:/var/www/${APP_NAME}:rw
+            - ./.docker/app/config/php:/usr/local/etc/php/custom.d:ro
+        depends_on:
+            - db
+            - nginx
+        networks:
+            - sky-network
+
+    db:
+        image: postgres:16
+        container_name: ${APP_NAME}_db
+        restart: unless-stopped
+        tty: true
+        environment:
+            POSTGRES_DB: ${DB_DATABASE}
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - '2345:5432'
+        volumes:
+            - db_data:/var/lib/postgresql/data
+        networks:
+            - sky-network
+
+    nginx:
+        image: nginx:1.25
+        container_name: ${APP_NAME}_nginx
+        restart: unless-stopped
+        tty: true
+        ports:
+            - '8099:80'
+        volumes:
+            - ./:/var/www
+            - ./.docker/nginx/conf.d/:/etc/nginx/conf.d/
+            - ./.docker/nginx/log/:/var/log/nginx
+        networks:
+            - sky-network
+
+networks:
+    sky-network:
+        name: sky-network
+        driver: bridge
+
+volumes:
+    db_data:
+        driver: local
