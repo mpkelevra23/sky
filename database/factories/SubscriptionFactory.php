@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Blog;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +19,6 @@ class SubscriptionFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => fake()->numberBetween(1, 10),
-            'blog_id' => fake()->numberBetween(1, 10),
             'created_at' => now(),
         ];
     }

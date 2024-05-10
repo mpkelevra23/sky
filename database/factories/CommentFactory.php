@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,10 +18,28 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
-            'post_id' => fake()->numberBetween(1, 10),
-            'user_id' => fake()->numberBetween(1, 10),
             'content' => fake()->sentence(),
             'created_at' => now(),
         ];
+    }
+
+    /**
+     * Indicate that the comment is a reply to another comment.
+     */
+    public function configure(): CommentFactory
+    {
+        return $this->afterCreating(function (Comment $comment) {
+
+            $parentRandomProbability = 75;
+
+            $randomComment = Comment::inRandomOrder()->first();
+
+            if ($randomComment->id !== $comment->id) {
+                $comment->parent_id = random_int(1, 100) <= $parentRandomProbability ? $randomComment->id : null;
+            } else {
+                $comment->parent_id = null;
+            }
+            $comment->save();
+        });
     }
 }

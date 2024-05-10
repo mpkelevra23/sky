@@ -17,7 +17,6 @@ class BlogFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => fake()->unique()->numberBetween(1, 10),
             'title' => fake()->sentence(),
             'description' => fake()->paragraph(),
             'image' => fake()->imageUrl(),

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Blog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class PostFactory extends Factory
             'title' => fake()->sentence(),
             'content' => fake()->paragraph(),
             'image' => fake()->imageUrl(),
-            'blog_id' => fake()->numberBetween(1, 10),
+            'is_published' => fake()->boolean(),
             'created_at' => now(),
         ];
     }
