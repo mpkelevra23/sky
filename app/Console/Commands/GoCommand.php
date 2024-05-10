@@ -113,7 +113,7 @@ class GoCommand extends Command
 //        $post = $comment->post;
 //        $user = $comment->user;
 //        $children = $comment->children;
-//        $comment = Comment::find(6);
+//        $comment = Comment::where('parent_id', !null)->first();
 //        $parent = $comment->parent;
 //
 //        dd(

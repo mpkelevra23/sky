@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->index()->constrained('users')->onDelete('cascade');
+            $table->foreignId('profile_id')->index()->constrained('profiles')->onDelete('cascade');
             $table->foreignId('blog_id')->index()->constrained('blogs')->onDelete('cascade');
-            $table->unique(['user_id', 'blog_id']);
+            $table->unique(['profile_id', 'blog_id']);
             $table->timestamps();
         });
     }

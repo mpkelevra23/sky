@@ -16,9 +16,9 @@ class Comment extends Model
         return $this->belongsTo(Post::class);
     }
 
-    public function user(): BelongsTo
+    public function profile(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Profile::class);
     }
 
     public function parent(): BelongsTo

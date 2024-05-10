@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Notification;
-use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,15 +14,15 @@ class NotificationSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::all();
+        $profiles = Profile::all();
 
         $notificationProbability = 50;
 
-        $users->each(function ($user) use ($notificationProbability) {
+        $profiles->each(function ($profile) use ($notificationProbability) {
             if (random_int(1, 100) <= $notificationProbability) {
                 Notification::factory()
                     ->count(random_int(1, 3))
-                    ->for($user)
+                    ->for($profile)
                     ->create();
             }
         });

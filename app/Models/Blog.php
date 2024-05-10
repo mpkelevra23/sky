@@ -17,9 +17,9 @@ class Blog extends Model
         return $this->hasMany(Post::class);
     }
 
-    public function user(): BelongsTo
+    public function profile(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Profile::class);
     }
 
     public function subscribers(): BelongsToMany
