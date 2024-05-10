@@ -29,17 +29,25 @@ class CommentFactory extends Factory
     public function configure(): CommentFactory
     {
         return $this->afterCreating(function (Comment $comment) {
+            // Define the probability of having a parent comment
+            $parentRandomProbability = 50;
 
-            $parentRandomProbability = 75;
-
-            $randomComment = Comment::inRandomOrder()->first();
-
-            if ($randomComment->id !== $comment->id) {
-                $comment->parent_id = random_int(1, 100) <= $parentRandomProbability ? $randomComment->id : null;
-            } else {
-                $comment->parent_id = null;
+            // Randomly decide if the comment should have a parent based on probability
+            if (random_int(1, 100) > $parentRandomProbability) {
+                return; // Skip setting a parent_id if the random check fails
             }
-            $comment->save();
+
+            // Select a random comment that could be the parent
+            $randomParentComment = Comment::where('post_id', $comment->post_id)
+                ->where('id', '<', $comment->id)
+                ->inRandomOrder()
+                ->first();
+
+            // Set the parent_id if a suitable parent comment was found
+            if ($randomParentComment) {
+                $comment->parent_id = $randomParentComment->id;
+                $comment->save();
+            }
         });
     }
 }
