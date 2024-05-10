@@ -16,21 +16,24 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('image')->nullable();
-            $table->foreignId('blog_id')->constrained()->onDelete('cascade');
+            $table->boolean('is_published')->default(false);
+            $table->foreignId('blog_id')->index()->constrained('blogs')->onDelete('cascade');
             $table->timestamps();
         });
 
         Schema::create('post_tag', function (Blueprint $table) {
-            $table->foreignId('post_id')->constrained()->onDelete('cascade');
-            $table->foreignId('tag_id')->constrained()->onDelete('cascade');
-            $table->primary(['post_id', 'tag_id']);
+            $table->id();
+            $table->foreignId('post_id')->index()->constrained('posts')->onDelete('cascade');
+            $table->foreignId('tag_id')->index()->constrained('tags')->onDelete('cascade');
+            $table->unique(['post_id', 'tag_id']);
             $table->timestamps();
         });
 
         Schema::create('category_post', function (Blueprint $table) {
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->foreignId('post_id')->constrained()->onDelete('cascade');
-            $table->primary(['category_id', 'post_id']);
+            $table->id();
+            $table->foreignId('category_id')->index()->constrained('categories')->onDelete('cascade');
+            $table->foreignId('post_id')->index()->constrained('posts')->onDelete('cascade');
+            $table->unique(['category_id', 'post_id']);
             $table->timestamps();
         });
     }
