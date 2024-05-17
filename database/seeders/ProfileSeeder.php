@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Image;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,6 +20,7 @@ class ProfileSeeder extends Seeder
         $users->each(function ($user) {
             Profile::factory()
                 ->for($user)
+                ->has(Image::factory())
                 ->create();
         });
     }

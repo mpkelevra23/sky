@@ -48,8 +48,6 @@ class DatabaseSeeder extends Seeder
 //            'email' => 'test@example.com',
 //        ]);
 
-        // TODO Надо разобраться с unique()->numberBetween(1, 10)
-
 //        User::factory()
 //            ->count(10)
 //            ->has(Profile::factory())

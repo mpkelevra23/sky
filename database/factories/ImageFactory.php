@@ -2,14 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Image;
-use App\Models\Profile;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<Profile>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Image>
  */
-class ProfileFactory extends Factory
+class ImageFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,9 +17,7 @@ class ProfileFactory extends Factory
     public function definition(): array
     {
         return [
-            'first_name' => fake()->firstName,
-            'last_name' => fake()->lastName,
-            'bio' => fake()->sentence(),
+            'url' => fake()->imageUrl(),
             'created_at' => now(),
         ];
     }
