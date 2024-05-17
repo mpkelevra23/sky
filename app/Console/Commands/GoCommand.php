@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\File;
+use App\Models\Image;
 use App\Models\Notification;
 use App\Models\Post;
 use App\Models\Profile;
@@ -34,6 +36,7 @@ class GoCommand extends Command
      */
     public function handle(): void
     {
+//      lesson 4
 //        $post = Post::first();
 //        $blog = Blog::find($post->blog_id);
 
@@ -149,6 +152,107 @@ class GoCommand extends Command
 //        dd(
 ////            $notification,
 ////            $user
+//        );
+
+//      lesson 5
+//      Blog
+//        $blog = Blog::first();
+//        dd(
+//            $blog->comments,
+//            $blog->subscribers->count(),
+//        );
+
+//      User
+//        $user = User::first();
+//        dd(
+//            $user->blog,
+////            $user->blog->posts->last()
+//        );
+
+//      Post
+//        $post = Post::find(25);
+//        $post->images()->saveMany([
+//            new Image([
+//                'url' => 'https://example.com/image1.jpg'
+//            ]),
+//            new Image([
+//                'url' => 'https://example.com/image2.jpg'
+//            ]),
+//            new Image([
+//                'url' => 'https://example.com/image3.jpg'
+//            ]),
+//        ]);
+//
+//        $post->files()->saveMany([
+//            new File([
+//                'name' => 'file1',
+//                'path' => '/path/to',
+//                'extension' => 'jpg'
+//            ]),
+//            new File([
+//                'name' => 'file2',
+//                'path' => '/path/to',
+//                'extension' => 'mp4'
+//            ]),
+//            new File([
+//                'name' => 'file3',
+//                'path' => '/path/to',
+//                'extension' => 'csv'
+//            ]),
+//        ]);
+//
+//        $postFiles = $post->files->map(function ($file) {
+//            return $file->path . '/' . $file->name . '.' . $file->extension;
+//        })->toArray();
+//
+//        dd(
+//            $post->blog->posts->last()->comments->last()->profile->user->email,
+//            $post->profile,
+//            $post->images,
+//            $post->images->pluck('url')->toArray(),
+//            $post->files,
+//            $postFiles
+//        );
+
+//      Profile
+//        $profile = Profile::first();
+//        $profile->image()->save(
+//            new Image([
+//                'url' => 'https://example.com/image.jpg'
+//            ])
+//        );
+
+//        dd(
+//            $profile->image->url,
+//            $profile->posts->count(),
+//            $profile->likedComments()->pluck('content')
+//        );
+
+//      Comment
+//        $comment = Comment::first();
+//
+//        $comment->file()->updateOrCreate(
+//            [],
+//            [
+//                'name' => 'file',
+//                'path' => '/path/to',
+//                'extension' => 'jpg'
+//            ]
+//        );
+//
+//        $commentFiles = $comment->file->path . '/' . $comment->file->name . '.' . $comment->file->extension;
+//
+//        dd(
+//            $comment->blog,
+//            $comment->file,
+//            $commentFiles,
+//            $comment->likedProfiles()->pluck('first_name')
+//        );
+
+//      Image
+//        $image = Image::first();
+//        dd(
+//            $image->imageable
 //        );
     }
 }

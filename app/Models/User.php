@@ -4,8 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -53,23 +52,11 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
-    public function blog(): HasOne
+    public function blog(): HasManyThrough
     {
-        return $this->hasOne(Blog::class);
-    }
-
-    public function subscriptions(): BelongsToMany
-    {
-        return $this->belongsToMany(Blog::class, 'subscriptions');
-    }
-
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class);
-    }
-
-    public function notifications(): HasMany
-    {
-        return $this->hasMany(Notification::class);
+        // Способ с использованием метода hasOneThrough
+//        return $this->hasManyThrough(Blog::class, Profile::class);
+        // Способ с использованием метода through и has
+        return $this->through('profile')->has('blog');
     }
 }

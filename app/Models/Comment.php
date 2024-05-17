@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Comment extends Model
 {
@@ -29,5 +31,20 @@ class Comment extends Model
     public function children(): HasMany
     {
         return $this->hasMany(__CLASS__, 'parent_id');
+    }
+
+    public function blog(): BelongsTo
+    {
+        return $this->post->blog();
+    }
+
+    public function file(): MorphOne
+    {
+        return $this->morphOne(File::class, 'fileable');
+    }
+
+    public function likedProfiles(): MorphToMany
+    {
+        return $this->morphToMany(Profile::class, 'likeable');
     }
 }
