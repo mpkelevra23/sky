@@ -15,7 +15,8 @@ class BlogSeeder extends Seeder
      */
     public function run(): void
     {
-        $profiles = Profile::all();
+        // Достаем всех пользователей, у которых нет блога
+        $profiles = Profile::doesntHave('blog')->get();
 
         $profiles->each(function ($profile) {
             Blog::factory()

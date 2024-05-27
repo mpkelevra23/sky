@@ -14,7 +14,8 @@ class NotificationSeeder extends Seeder
      */
     public function run(): void
     {
-        $profiles = Profile::all();
+        // Получаем профили, у которых нет уведомлений
+        $profiles = Profile::doesntHave('notifications')->get();
 
         $notificationProbability = 50;
 

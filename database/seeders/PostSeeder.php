@@ -18,7 +18,8 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        $blogs = Blog::all();
+        // Достаем все блоги, у которых нет постов
+        $blogs = Blog::doesntHave('posts')->get();
 
         $blogs->each(function ($blog) {
             Post::factory()

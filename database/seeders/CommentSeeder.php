@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Comment;
-use App\Models\File;
 use App\Models\Post;
 use App\Models\Profile;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -18,8 +17,8 @@ class CommentSeeder extends Seeder
      */
     public function run(): void
     {
-        $profiles = Profile::all();
-        $posts = Post::all();
+        $profiles = Profile::doesntHave('comments')->get();
+        $posts = Post::doesntHave('comments')->get();
 
         /*
          * Для каждого поста, каждый профиль, может оставить от 1 до 3 комментариев с вероятностью CREATE_COMMENT_PROBABILITY

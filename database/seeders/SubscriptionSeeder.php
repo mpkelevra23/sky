@@ -15,8 +15,11 @@ class SubscriptionSeeder extends Seeder
      */
     public function run(): void
     {
-        $profiles = Profile::all();
-        $blogs = Blog::all();
+        // Получаем профили, у которых нет подписок
+        $profiles = Profile::doesntHave('subscriptions')->get();
+
+        // Получаем блоги, у которых нет подписчиков
+        $blogs = Blog::doesntHave('subscribers')->get();
 
         $subscriptionProbability = 10;
 
