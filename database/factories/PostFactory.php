@@ -20,27 +20,33 @@ class PostFactory extends Factory
 {
     private const ADD_IMAGE_PROBABILITY = 75;
     private const ADD_FILE_PROBABILITY = 25;
-    private const ADD_CATEGORY_PROBABILITY = 25;
-    private const ADD_TAG_PROBABILITY = 10;
     private const ADD_LIKE_PROBABILITY = 90;
     private const ADD_FAVORITE_PROBABILITY = 75;
 
     protected static Collection $categories;
     protected static Collection $tags;
+    protected static Collection $profiles;
 
     public static function initialize(): void
     {
         // Инициализация свойств пустыми коллекциями
         self::$categories = self::$categories ?? new Collection();
         self::$tags = self::$tags ?? new Collection();
+        self::$profiles = self::$profiles ?? new Collection();
 
-        // Кэшируем категории и теги
+        // Кэшируем категории
         if (self::$categories->isEmpty()) {
             self::$categories = Category::all();
         }
 
+        // Кэшируем теги
         if (self::$tags->isEmpty()) {
             self::$tags = Tag::all();
+        }
+
+        // Кэшируем профили
+        if (self::$profiles->isEmpty()) {
+            self::$profiles = Profile::all();
         }
     }
 
@@ -107,7 +113,7 @@ class PostFactory extends Factory
     }
 
     /**
-     * Добавляем категории к посту с вероятностью ADD_CATEGORY_PROBABILITY
+     * Добавляем от 1 до 3 категорий к посту.
      *
      * @param Post $post
      * @return void
@@ -115,15 +121,13 @@ class PostFactory extends Factory
      */
     private function handleCategories(Post $post): void
     {
-        self::$categories->each(function ($category) use ($post) {
-            if (random_int(1, 100) <= self::ADD_CATEGORY_PROBABILITY) {
-                $this->addCategory($post, $category);
-            }
+        self::$categories->random(random_int(1, 3))->each(function ($category) use ($post) {
+            $this->addCategory($post, $category);
         });
     }
 
     /**
-     * Добавляем теги к посту с вероятностью ADD_TAG_PROBABILITY
+     * Добавляем от 1 до 5 тегов к посту.
      *
      * @param Post $post
      * @return void
@@ -131,10 +135,8 @@ class PostFactory extends Factory
      */
     private function handleTags(Post $post): void
     {
-        self::$tags->each(function ($tag) use ($post) {
-            if (random_int(1, 100) <= self::ADD_TAG_PROBABILITY) {
-                $this->addTag($post, $tag);
-            }
+        self::$tags->random(random_int(1, 5))->each(function ($tag) use ($post) {
+            $this->addTag($post, $tag);
         });
     }
 
@@ -215,7 +217,7 @@ class PostFactory extends Factory
     }
 
     /**
-     * Добавляем лайки к посту.
+     * Добавляем лайки к посту от случайных профилей.
      *
      * @param Post $post
      * @return void
@@ -224,7 +226,7 @@ class PostFactory extends Factory
     private function addLike(Post $post): void
     {
         // От 1 до 3 случайных профилей лайкают пост
-        Profile::inRandomOrder()->limit(random_int(1, 3))->get()->each(function ($profile) use ($post) {
+        self::$profiles->random(random_int(1, 3))->each(function ($profile) use ($post) {
             $profile->likedPosts()->attach($post, ['created_at' => now()]);
         });
     }
@@ -239,7 +241,7 @@ class PostFactory extends Factory
     private function addFavorite(Post $post): void
     {
         // От 1 до 3 случайных профилей добавляют пост в избранное
-        Profile::inRandomOrder()->limit(random_int(1, 3))->get()->each(function ($profile) use ($post) {
+        self::$profiles->random(random_int(1, 3))->each(function ($profile) use ($post) {
             $profile->favoritePosts()->attach($post, ['created_at' => now()]);
         });
     }

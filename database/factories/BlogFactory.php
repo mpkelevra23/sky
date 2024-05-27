@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Blog;
 use App\Models\Profile;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Random\RandomException;
 
@@ -13,6 +14,19 @@ use Random\RandomException;
 class BlogFactory extends Factory
 {
     private const ADD_FAVORITE_PROBABILITY = 75;
+
+    protected static Collection $profiles;
+
+    public static function initialize(): void
+    {
+        // Инициализация свойства пустой коллекцией
+        self::$profiles = self::$profiles ?? new Collection();
+
+        // Кэшируем профили
+        if (self::$profiles->isEmpty()) {
+            self::$profiles = Profile::all();
+        }
+    }
 
     /**
      * Define the model's default state.
@@ -35,6 +49,8 @@ class BlogFactory extends Factory
      */
     public function configure()
     {
+        self::initialize();
+
         return $this->afterCreating(function (Blog $blog) {
             $this->handleFavorites($blog);
         });
@@ -64,7 +80,7 @@ class BlogFactory extends Factory
     private function addFavorite(Blog $blog): void
     {
         // От 1 до 3 случайных профилей добавляют блог в избранное
-        Profile::inRandomOrder()->limit(random_int(1, 3))->get()->each(function ($profile) use ($blog) {
+        self::$profiles->random(random_int(1, 3))->each(function (Profile $profile) use ($blog) {
             $profile->favoriteBlogs()->attach($blog, ['created_at' => now()]);
         });
     }
