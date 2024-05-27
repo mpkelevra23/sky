@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('profile_id')->constrained('profiles')->onDelete('cascade');
+//            $table->foreignId('profile_id')->constrained('profiles')->onDelete('cascade');
+            // Лучше отказаться от каскадного удаления, и использовать observer для удаления блога
+            $table->foreignId('profile_id')->unique()->constrained('profiles');
             $table->string('title');
             $table->text('description');
             $table->softDeletes();

@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('category_post', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->index()->constrained('categories')->onDelete('cascade');
-            $table->foreignId('post_id')->index()->constrained('posts')->onDelete('cascade');
+//            $table->foreignId('category_id')->index()->constrained('categories')->onDelete('cascade');
+            // Лучше отказаться от каскадного удаления, и использовать observer для удаления связи
+            $table->foreignId('category_id')->index()->constrained('categories');
+//            $table->foreignId('post_id')->index()->constrained('posts')->onDelete('cascade');
+            // Лучше отказаться от каскадного удаления, и использовать observer для удаления связи
+            $table->foreignId('post_id')->index()->constrained('posts');
             $table->unique(['category_id', 'post_id']);
             $table->timestamps();
         });

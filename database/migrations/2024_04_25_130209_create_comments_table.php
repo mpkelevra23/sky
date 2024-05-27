@@ -13,10 +13,16 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('profile_id')->index()->constrained('profiles')->onDelete('cascade');
-            $table->foreignId('post_id')->index()->constrained('posts')->onDelete('cascade');
+//            $table->foreignId('profile_id')->index()->constrained('profiles')->onDelete('cascade');
+            // Лучше отказаться от каскадного удаления, и использовать observer для удаления комментария
+            $table->foreignId('profile_id')->index()->constrained('profiles');
+//            $table->foreignId('post_id')->index()->constrained('posts')->onDelete('cascade');
+            // Лучше отказаться от каскадного удаления, и использовать observer для удаления комментария
+            $table->foreignId('post_id')->index()->constrained('posts');
             $table->text('content');
-            $table->foreignId('parent_id')->nullable()->index()->constrained('comments')->onDelete('cascade');
+//            $table->foreignId('parent_id')->nullable()->index()->constrained('comments')->onDelete('cascade');
+            // Лучше отказаться от каскадного удаления, и использовать observer для удаления комментария
+            $table->foreignId('parent_id')->nullable()->index()->constrained('comments');
             $table->timestamps();
         });
     }

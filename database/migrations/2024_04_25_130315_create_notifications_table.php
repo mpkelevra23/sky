@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('profile_id')->constrained('profiles')->onDelete('cascade');
+//            $table->foreignId('profile_id')->constrained('profiles')->onDelete('cascade');
+            // Лучше отказаться от каскадного удаления, и использовать observer для удаления уведомления
+            $table->foreignId('profile_id')->constrained('profiles');
             $table->string('title');
             $table->text('content');
             $table->string('status')->default('unread');

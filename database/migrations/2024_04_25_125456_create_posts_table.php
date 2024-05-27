@@ -16,7 +16,10 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->boolean('is_published')->default(false);
-            $table->foreignId('blog_id')->index()->constrained('blogs')->onDelete('cascade');
+            // TODO проверить, что softDeletes() отработает и на блог и на пост
+//            $table->foreignId('blog_id')->index()->constrained('blogs')->onDelete('cascade');
+            // Лучше отказаться от каскадного удаления, и использовать observer для удаления поста
+            $table->foreignId('blog_id')->index()->constrained('blogs');
             $table->timestamps();
         });
     }
