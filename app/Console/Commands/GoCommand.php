@@ -14,6 +14,7 @@ use App\Models\Subscription;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 
 class GoCommand extends Command
 {
@@ -254,5 +255,31 @@ class GoCommand extends Command
 //        dd(
 //            $image->imageable
 //        );
+
+//        lesson 8
+//        /*
+//         * Создать пользователя, чтобы проверить работу Observer метода created, после создания пользователя должен создаться профиль пользователя.
+//         * Также проверяем работу логгера, после создания пользователя должна создаться запись в логах.
+//         */
+//        User::create([
+//            'name' => 'John Doe',
+//            'email' => 'test@test.com',
+//            'password' => Hash::make('qwerty'),
+//        ]);
+//
+//        // Обновляем профиль пользователя и проверяем работу логгера
+//        $profile = Profile::first();
+//        $profile->update([
+//            'first_name' => 'John',
+//            'last_name' => 'Doe',
+//        ]);
+//
+//        // Достаём последнего пользователя и удаляем его, проверяем работу логгера
+//        User::latest()->first()->delete();
+//
+//        // Создаём новый блог и проверяем работу логгера
+//        Tag::create([
+//            'name' => 'Laravel',
+//        ]);
     }
 }
