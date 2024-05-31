@@ -21,6 +21,7 @@ return new class extends Migration
             // Лучше отказаться от каскадного удаления, и использовать observer для удаления поста
             $table->foreignId('blog_id')->index()->constrained('blogs');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -16,10 +16,10 @@ return new class extends Migration
 //            $table->foreignId('profile_id')->constrained('profiles')->onDelete('cascade');
             // Лучше отказаться от каскадного удаления, и использовать observer для удаления блога
             $table->foreignId('profile_id')->unique()->constrained('profiles');
-            $table->string('title');
-            $table->text('description');
-            $table->softDeletes();
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

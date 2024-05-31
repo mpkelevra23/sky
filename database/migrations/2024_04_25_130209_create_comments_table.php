@@ -24,6 +24,7 @@ return new class extends Migration
             // Лучше отказаться от каскадного удаления, и использовать observer для удаления комментария
             $table->foreignId('parent_id')->nullable()->index()->constrained('comments');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
