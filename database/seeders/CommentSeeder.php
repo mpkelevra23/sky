@@ -10,7 +10,7 @@ use Illuminate\Database\Seeder;
 
 class CommentSeeder extends Seeder
 {
-    private const CREATE_COMMENT_PROBABILITY = 10;
+    private const CREATE_COMMENT_PROBABILITY = 20;
 
     /**
      * Run the database seeds.

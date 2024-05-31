@@ -3,15 +3,22 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Observers\UserObserver;
+use App\Traits\Loggable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+#[ObservedBy([UserObserver::class])]
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes, Loggable;
 
     /**
      * The attributes that are mass assignable.
@@ -58,5 +65,10 @@ class User extends Authenticatable
 //        return $this->hasManyThrough(Blog::class, Profile::class);
         // Способ с использованием метода through и has
         return $this->through('profile')->has('blog');
+    }
+
+    public function logs(): MorphToMany
+    {
+        return $this->morphToMany(Log::class, 'loggable');
     }
 }
