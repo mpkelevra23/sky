@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasFilter;
+use App\Models\Traits\Loggable;
 use App\Observers\CommentObserver;
-use App\Traits\Loggable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 #[ObservedBy([CommentObserver::class])]
 class Comment extends Model
 {
-    use HasFactory, SoftDeletes, Loggable;
+    use HasFactory, SoftDeletes, Loggable, HasFilter;
 
     public function post(): BelongsTo
     {

@@ -10,11 +10,12 @@ class CommentService
     /**
      * Comment index
      *
+     * @param $data
      * @return Collection
      */
-    public static function index(): Collection
+    public static function index($data): Collection
     {
-        return Comment::all();
+        return Comment::filter($data)->get();
     }
 
     /**
