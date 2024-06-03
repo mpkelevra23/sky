@@ -18,7 +18,7 @@ class ProfileController extends Controller
         return ProfileResource::make($profile)->resolve();
     }
 
-    public function store()
+    public function store(): string
     {
         // Создание нового профиля c помощью фабрики
         Profile::factory()->create();

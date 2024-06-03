@@ -10,11 +10,12 @@ class ProfileService
     /**
      * Profile index
      *
+     * @param $data
      * @return Collection
      */
-    public static function index(): Collection
+    public static function index($data): Collection
     {
-        return Profile::all();
+        return Profile::filter($data)->get();
     }
 
     /**
