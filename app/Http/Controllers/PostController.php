@@ -18,7 +18,7 @@ class PostController extends Controller
         return PostResource::make($post)->resolve();
     }
 
-    public function store()
+    public function store(): string
     {
         // Создание нового поста c помощью фабрики
         Post::factory()->create();

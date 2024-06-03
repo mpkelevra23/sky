@@ -25,11 +25,12 @@ class PostService
     /**
      * Post index
      *
+     * @param $data
      * @return Collection
      */
-    public static function index(): Collection
+    public static function index($data): Collection
     {
-        return Post::all();
+        return Post::filter($data)->get();
     }
 
     /**
