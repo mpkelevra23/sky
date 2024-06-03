@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\Loggable;
+use App\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

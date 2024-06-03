@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace App\Models\Traits;
 
 use App\Events\LoggingEnded;
 use App\Events\LoggingStarted;
@@ -46,7 +46,7 @@ trait Loggable
         // Создаем запись в таблице логов
         Log::create([
             'loggable_id' => $this->id,
-            'loggable_type' => get_class($this),
+            'loggable_type' => __CLASS__,
             'event' => $event,
             'old_values' => $oldValues,
             'new_values' => $newValues,

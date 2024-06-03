@@ -21,6 +21,6 @@ class LogEndListener
      */
     public function handle(LoggingEnded $event): void
     {
-        echo 'Logging ended for event: ' . $event->event . ' on model: ' . get_class($event->model) . PHP_EOL;
+        echo 'Logging ended for event: ' . $event->event . ' on model: ' . get_class($event->model) . ' ID: ' . $event->model->id . PHP_EOL;
     }
 }

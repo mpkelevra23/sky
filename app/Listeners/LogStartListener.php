@@ -21,6 +21,6 @@ class LogStartListener
      */
     public function handle(LoggingStarted $event): void
     {
-        echo 'Logging started for event: ' . $event->event . ' on model: ' . get_class($event->model) . PHP_EOL;
+        echo 'Logging started for event: ' . $event->event . ' on model: ' . get_class($event->model) . ' ID: ' . $event->model->id . PHP_EOL;
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Loggable;
 use App\Observers\CategoryObserver;
-use App\Traits\Loggable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
