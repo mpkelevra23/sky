@@ -10,6 +10,7 @@ use App\Models\Image;
 use App\Models\Notification;
 use App\Models\Post;
 use App\Models\Profile;
+use App\Models\Role;
 use App\Models\Subscription;
 use App\Models\Tag;
 use App\Models\User;
@@ -281,5 +282,19 @@ class GoCommand extends Command
 //        Tag::create([
 //            'name' => 'Laravel',
 //        ]);
+
+//        lesson 10
+        // Создаём пользователя
+//        User::create([
+//            'name' => 'John Doe',
+//            'email' => 'test@test.com',
+//            'password' => Hash::make('qwerty'),
+//        ]);
+//
+        // Удаляем пользователя
+//        User::latest()->first()->delete();
+//
+        // Удаляем последнюю роль
+//        Role::latest()->first()->delete();
     }
 }

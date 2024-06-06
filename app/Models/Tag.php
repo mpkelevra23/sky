@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Models\Traits\Loggable;
+use App\Observers\TagObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
+#[ObservedBy([TagObserver::class])]
 class Tag extends Model
 {
     use HasFactory, Loggable;

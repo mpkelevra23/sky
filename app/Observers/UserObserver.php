@@ -11,6 +11,8 @@ class UserObserver
      */
     public function created(User $user): void
     {
+        // Добавляем роль "Пользователь" при создании профиля
+        $user->roles()->attach(1);
         $user->profile()->create();
         // Можно использовать метод logChange из трейта Loggable для логирования изменений
 //        $user->logChange(__FUNCTION__);
@@ -40,6 +42,7 @@ class UserObserver
         $user->profile()->each(static function ($profile) {
             $profile->delete();
         });
+        $user->roles()->detach();
     }
 
     /**
