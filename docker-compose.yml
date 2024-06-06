@@ -23,6 +23,9 @@ services:
             - nginx
         networks:
             - sky-network
+        ports:
+            # Прокидываем порт для работы с vite
+            - "${VITE_PORT}:${VITE_PORT}"
 
     db:
         image: postgres:16
