@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
          * Основной вариант
          */
         $this->call([
+            RoleSeeder::class,
             UserSeeder::class,
             ProfileSeeder::class,
             BlogSeeder::class,
