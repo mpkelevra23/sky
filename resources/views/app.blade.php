@@ -16,6 +16,7 @@
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
+        {{--Место, где будет отображаться контент, возвращаемый компонентами Vue --}}
         @inertia
     </body>
 </html>
