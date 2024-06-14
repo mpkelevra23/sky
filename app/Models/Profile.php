@@ -6,6 +6,7 @@ use App\Models\Traits\HasFilter;
 use App\Models\Traits\Loggable;
 use App\Observers\ProfileObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -81,5 +82,10 @@ class Profile extends Model
     public function logs(): MorphMany
     {
         return $this->morphMany(Log::class, 'loggable');
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 }

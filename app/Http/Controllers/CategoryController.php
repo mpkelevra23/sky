@@ -5,17 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Resources\Category\CategoryResource;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class CategoryController extends Controller
 {
-    public function index(): array
+    public function index(): Response
     {
-        return CategoryResource::collection(Category::all())->resolve();
+        $categories = CategoryResource::collection(Category::all())->resolve();
+        return Inertia::render('Category/Index', compact('categories'));
     }
 
-    public function show(Category $category): array
+    public function show(Category $category): Response
     {
-        return CategoryResource::make($category)->resolve();
+        $category = CategoryResource::make($category)->resolve();
+        return Inertia::render('Category/Show', compact('category'));
     }
 
     public function store(): string

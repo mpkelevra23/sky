@@ -34,6 +34,17 @@ class PostService
     }
 
     /**
+     * Post show
+     *
+     * @param Post $post
+     * @return Post
+     */
+    public static function show(Post $post): Post
+    {
+        return $post;
+    }
+
+    /**
      * Post store
      *
      * @param array $data

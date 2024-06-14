@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Resources\Profile\ProfileResource;
+use App\Models\Profile;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,6 +15,17 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
+    public function index(): Response
+    {
+        $profiles = ProfileResource::collection(Profile::all())->resolve();
+        return Inertia::render('Profile/Index', compact('profiles'));
+    }
+
+    public function show(Profile $profile): Response
+    {
+        $profile = ProfileResource::make($profile)->resolve();
+        return Inertia::render('Profile/Show', compact('profile'));
+    }
     /**
      * Display the user's profile form.
      */

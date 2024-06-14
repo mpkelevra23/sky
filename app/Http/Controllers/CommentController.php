@@ -5,17 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Http\Resources\Comment\CommentResource;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class CommentController extends Controller
 {
-    public function index(): array
+    public function index(): Response
     {
-        return CommentResource::collection(Comment::all())->resolve();
+        $comments = CommentResource::collection(Comment::all())->resolve();
+        return Inertia::render('Comment/Index', compact('comments'));
     }
 
-    public function show(Comment $comment): array
+    public function show(Comment $comment): Response
     {
-        return CommentResource::make($comment)->resolve();
+        $comment = CommentResource::make($comment)->resolve();
+        return Inertia::render('Comment/Show', compact('comment'));
     }
 
     public function store(): string

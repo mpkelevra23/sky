@@ -5,17 +5,21 @@ namespace App\Http\Controllers;
 use App\Http\Resources\Tag\TagResource;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class TagController extends Controller
 {
-    public function index(): array
+    public function index(): Response
     {
-        return TagResource::collection(Tag::all())->resolve();
+        $tags = TagResource::collection(Tag::all())->resolve();
+        return Inertia::render('Tag/Index', compact('tags'));
     }
 
-    public function show(Tag $tag): array
+    public function show(Tag $tag): Response
     {
-        return TagResource::make($tag)->resolve();
+        $tag = TagResource::make($tag)->resolve();
+        return Inertia::render('Tag/Show', compact('tag'));
     }
 
     public function store(): string

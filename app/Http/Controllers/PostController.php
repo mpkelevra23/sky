@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Post\PostDetailResource;
 use App\Http\Resources\Post\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class PostController extends Controller
 {
-    public function index(): array
+    public function index(): Response
     {
-        return PostResource::collection(Post::all())->resolve();
+        $posts = PostResource::collection(Post::all())->resolve();
+        return Inertia::render('Post/Index', compact('posts'));
     }
 
-    public function show(Post $post): array
+    public function show(Post $post): Response
     {
-        return PostResource::make($post)->resolve();
+        $post = PostDetailResource::make($post)->resolve();
+        return Inertia::render('Post/Show', compact('post'));
     }
 
     public function store(): string
