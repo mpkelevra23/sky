@@ -41,8 +41,8 @@ Route::group(['prefix' => 'auth'], function () {
 
 // Пример использования метода apiResource
 // TODO добавить ресурс User?
-Route::apiResource('posts', PostController::class);
-Route::apiResource('profiles', ProfileController::class)->middleware('jwt.auth');
+Route::apiResource('posts', PostController::class)->middleware(['auth.hasToken', 'jwt.auth']);
+Route::apiResource('profiles', ProfileController::class)->middleware(['auth.hasToken', 'jwt.auth']);
 Route::apiResource('blogs', BlogController::class);
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('tags', TagController::class);
@@ -55,10 +55,19 @@ Route::apiResource('notifications', NotificationController::class);
 //Route::get('comments', [CommentController::class, 'index'])->middleware(['jwt.auth', 'role:admin']);
 
 // Просмотр комментария и списка комментариев доступен всем, а добавление, обновление и удаление только администратору
-Route::middleware('jwt.auth')->group(function () {
+Route::middleware(['jwt.auth', 'auth.hasToken'])->group(function () {
     Route::get('comments', [CommentController::class, 'index']);
     Route::get('comments/{comment}', [CommentController::class, 'show']);
-    Route::post('comments', [CommentController::class, 'store'])->middleware('auth.admin');
-    Route::patch('comments/{comment}', [CommentController::class, 'update'])->middleware('auth.admin');
-    Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->middleware('auth.admin');
+    Route::post('comments', [CommentController::class, 'store'])->middleware(['auth.hasToken', 'role:admin']);
+    Route::patch('comments/{comment}', [CommentController::class, 'update'])->middleware(['auth.hasToken', 'role:admin']);
+    Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->middleware(['auth.hasToken', 'role:admin']);
+});
+
+// Просмотр поста, списка постов, добавление и обновление поста доступно всем, а удаление только администратору
+Route::middleware(['jwt.auth', 'auth.hasToken'])->group(function () {
+    Route::get('posts', [PostController::class, 'index']);
+    Route::get('posts/{post}', [PostController::class, 'show']);
+    Route::post('posts', [PostController::class, 'store']);
+    Route::patch('posts/{post}', [PostController::class, 'update']);
+    Route::delete('posts/{post}', [PostController::class, 'destroy'])->middleware(['auth.hasToken', 'role:admin']);
 });

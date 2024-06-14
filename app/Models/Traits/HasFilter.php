@@ -19,12 +19,12 @@ trait HasFilter
      */
     public function scopeFilter(Builder $builder, array $data): Builder
     {
-        $filterClass = 'App\Http\Filters\\' . class_basename($this) . 'Filter';
+        $FilterClass = 'App\Http\Filters\\' . class_basename($this) . 'Filter';
 
-        if (!class_exists($filterClass)) {
-            throw new ModelNotFoundException("Filter class {$filterClass} not found.");
+        if (!class_exists($FilterClass)) {
+            throw new ModelNotFoundException("Filter class {$FilterClass} not found.");
         }
 
-        return (new $filterClass())->apply($builder, $data);
+        return (new $FilterClass())->apply($builder, $data);
     }
 }

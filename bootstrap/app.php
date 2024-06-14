@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Middleware\EnsureUserHasRole;
+use App\Http\Middleware\EnsureUserHasToken;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
+use Illuminate\Support\Facades\Schedule;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -35,6 +37,7 @@ return Application::configure(basePath: dirname(__DIR__))
 //            'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
             'auth.admin' => IsAdminMiddleware::class,
             'role' => EnsureUserHasRole::class,
+            'auth.hasToken' => EnsureUserHasToken::class,
         ]);
         /**
          * Регистрируем посредники для обработки всех api-запросов
@@ -54,6 +57,11 @@ return Application::configure(basePath: dirname(__DIR__))
 
         //
     })
+    // Регистрируем планировщик задач через метод withSchedule внутри bootstrap/app.php
+//    ->withSchedule(function (Schedule $schedule) {
+//        $schedule->command('go')
+//            ->everyMinute();
+//    })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
